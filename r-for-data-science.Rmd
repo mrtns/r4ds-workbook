@@ -1,0 +1,165 @@
+---
+title: "r-for-data-science"
+output: html_document
+---
+
+# Setup
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("tidyverse", repos="http://cran.us.r-project.org")
+library(tidyverse)
+
+library(ggplot2)
+```
+
+
+# Chapter 1
+
+## First Steps
+
+### Engine Displacement (in Litres) by Highway Mileage (per Gallon)
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+### 1
+
+> Run ggplot(data = mpg). What do you see?
+
+Blank canvas.
+
+```{r}
+ggplot(data = ggplot2::mpg)
+```
+
+### 2
+
+> How many rows are in mtcars? How many columns?
+
+```{r}
+ggplot2::mpg
+```
+
+### 3
+
+> What does the drv variable describe? Read the help for ?mpg to find out.
+
+```{r}
+?mpg
+```
+
+### 4
+
+> Make a scatterplot of hwy versus cyl.
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = hwy, y = cyl))
+```
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_jitter(mapping = aes(x = hwy, y = cyl))
+```
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_count(mapping = aes(x = hwy, y = cyl))
+```
+
+
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_bin2d(mapping = aes(x = hwy, y = cyl))
+```
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = hwy, y = cyl), alpha = 0.05)
+```
+
+### 5
+
+> What happens if you make a scatterplot of class versus drv? Why is the plot not useful?
+
+`class` and `drv` are both categorical variables.
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = class, y = drv))
+```
+
+
+## Aesthetic Mappings
+
+### Engine Displacement (in Litres) by Highway Mileage (per Gallon), by Class (Type of Car)
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+
+### 1
+
+```{r}
+ggplot2::mpg
+```
+
+### 2
+
+> Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset.) How can you see this information when you run mpg?
+
+```{r}
+str(ggplot2::mpg)
+```
+
+### 3
+
+> Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical versus continuous variables?
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = year))
+```
+
+### 4
+
+> What happens if you map the same variable to multiple aesthetics?
+
+
+```{r}
+ggplot(data = ggplot2::mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = hwy))
+```
+
+### 5
+
+> What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point.)
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy), shape = 21, colour = "black", fill = "white", size = 5, stroke = 5)
+```
+
+### 6
+
+> What happens if you map an aesthetic to something other than a variable name, like aes(color = displ < 5)?
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = displ < 5))
+```
+
+## Common Problems
+
+```{r}
+ggplot(data = mpg)  
+  + geom_point(mapping = aes(x = displ, y = hwy))
+```
