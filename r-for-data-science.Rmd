@@ -28,7 +28,9 @@ ggplot(data = ggplot2::mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
-### 1
+### Exercises
+
+#### 1
 
 > Run ggplot(data = mpg). What do you see?
 
@@ -38,7 +40,7 @@ Blank canvas.
 ggplot(data = ggplot2::mpg)
 ```
 
-### 2
+#### 2
 
 > How many rows are in mtcars? How many columns?
 
@@ -46,7 +48,7 @@ ggplot(data = ggplot2::mpg)
 ggplot2::mpg
 ```
 
-### 3
+#### 3
 
 > What does the drv variable describe? Read the help for ?mpg to find out.
 
@@ -54,7 +56,7 @@ ggplot2::mpg
 ?mpg
 ```
 
-### 4
+#### 4
 
 > Make a scatterplot of hwy versus cyl.
 
@@ -85,7 +87,7 @@ ggplot(data = ggplot2::mpg) +
   geom_point(mapping = aes(x = hwy, y = cyl), alpha = 0.05)
 ```
 
-### 5
+#### 5
 
 > What happens if you make a scatterplot of class versus drv? Why is the plot not useful?
 
@@ -106,13 +108,15 @@ ggplot(data = ggplot2::mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = class))
 ```
 
-### 1
+### Exercises
+
+#### 1
 
 ```{r}
 ggplot2::mpg
 ```
 
-### 2
+#### 2
 
 > Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset.) How can you see this information when you run mpg?
 
@@ -120,7 +124,7 @@ ggplot2::mpg
 str(ggplot2::mpg)
 ```
 
-### 3
+#### 3
 
 > Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical versus continuous variables?
 
@@ -129,7 +133,7 @@ ggplot(data = ggplot2::mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = year))
 ```
 
-### 4
+#### 4
 
 > What happens if you map the same variable to multiple aesthetics?
 
@@ -139,7 +143,7 @@ ggplot(data = ggplot2::mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = hwy))
 ```
 
-### 5
+#### 5
 
 > What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point.)
 
@@ -148,7 +152,7 @@ ggplot(data = ggplot2::mpg) +
   geom_point(mapping = aes(x = displ, y = hwy), shape = 21, colour = "black", fill = "white", size = 5, stroke = 5)
 ```
 
-### 6
+#### 6
 
 > What happens if you map an aesthetic to something other than a variable name, like aes(color = displ < 5)?
 
@@ -160,6 +164,549 @@ ggplot(data = ggplot2::mpg) +
 ## Common Problems
 
 ```{r}
-ggplot(data = mpg)  
-  + geom_point(mapping = aes(x = displ, y = hwy))
+#ggplot(data = mpg)  
+#  + geom_point(mapping = aes(x = displ, y = hwy))
 ```
+
+## Facets
+
+### Highway Mileage (per Gallon) by Engine Displacement (in Litres), By Car Type
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+```
+
+### Highway Mileage (per Gallon) by Engine Displacement (in Litres), By Drive Type, By Number of Cylinders
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ cyl)
+```
+
+
+### Highway Mileage (per Gallon) by Engine Displacement (in Litres), By Number of Cylinders
+
+```{r}
+ggplot(data = ggplot2::mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+```
+
+### Exercises
+
+#### 1
+
+> What happens if you facet on a continuous variable?
+
+```{r}
+ggplot(data = ggplot2::mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cty)
+```
+
+#### 2
+
+> What do the empty cells in a plot with facet_grid(drv ~ cyl) mean? How do they relate to this plot?
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ cyl)
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = drv, y = cyl))
+```
+
+#### 3
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+```
+
+#### 4
+
+> Take the first faceted plot in this section:
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_wrap(~ class, nrow = 2)
+```
+
+> What are the advantages to using faceting instead of the color aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(~ class)
+```
+
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+
+#### 5
+
+```{r}
+?facet_wrap
+```
+
+## Geometric Objects
+
+### Highway Mileage (per Gallon) by Engine Displacement (in Litres)
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+### Highway Mileage (per Gallon) by Engine Displacement (in Litres), By Drive Type
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv))
+```
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, color = drv)) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = drv))
+```
+
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
+
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(
+    mapping = aes(x = displ, y = hwy, color = drv),
+    show.legend = FALSE
+  )
+```
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+```{r}
+ggplot(data = ggplot2::mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = ggplot2::mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = ggplot2::mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth(
+    data = filter(mpg, class == "subcompact"),
+    se = FALSE,
+    mapping = aes(color = class)
+  )
+```
+
+### Exercises
+
+#### 1
+
+
+
+#### 2
+
+```{r}
+ggplot(
+  data = mpg,
+  mapping = aes(x = displ, y = hwy, color = drv)
+) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+```
+
+#### 4
+
+```{r}
+ggplot(
+  data = ggplot2::mpg,
+  mapping = aes(x = displ, y = hwy, color = drv)
+) +
+  geom_point() +
+  geom_smooth(se = TRUE)
+```
+
+## Statistical Transformations
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(mapping = aes(x = cut))
+```
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  stat_count(mapping = aes(x = cut))
+```
+
+```{r}
+demo <- tribble(
+  ~a, ~b,
+  "bar_1", 20,
+  "bar_2", 30,
+  "bar_3", 40
+)
+```
+
+
+```{r}
+ggplot(data = demo) +
+  geom_bar(
+    mapping = aes(x = a, y = b), stat = "identity"
+  )
+```
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, y = ..prop.., group = 1)
+  )
+```
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  stat_summary(
+    mapping = aes(x = cut, y = depth),
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  )
+```
+
+### Exercises
+
+#### 1
+
+With `stat_summary`:
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  stat_summary(
+    mapping = aes(x = cut, y = depth),
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  )
+```
+
+With `geom_pointrange` and a separate stats dataframe:
+
+```{r}
+diamonds_summary <- ggplot2::diamonds %>%
+  group_by(cut) %>%
+  summarise(
+    lower = min(depth),
+    upper = max(depth),
+    p = median(depth)
+  )
+```
+
+```{r}
+ggplot(data = diamonds_summary) +
+  geom_pointrange(
+    mapping = aes(x = cut, y = p, ymin = lower, ymax = upper)
+  )
+```
+
+With `geom_pointrange` and in-line stats:
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_pointrange(
+    mapping = aes(x = cut, y = depth),
+    stat = "summary",
+    fun.y = median,
+    fun.ymin = min,
+    fun.ymax = max
+  )
+```
+
+With y-axis starting a 0:
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_pointrange(
+    mapping = aes(x = cut, y = depth),
+    stat = "summary",
+    fun.y = median,
+    fun.ymin = min,
+    fun.ymax = max
+  ) +
+  scale_y_continuous(limits = c(0, NA))
+```
+
+#### 5
+
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, y = ..prop..))
+```
+
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = color, y = ..prop..)
+  )
+```
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(
+      x = cut,
+      y = ..prop..,
+      fill = color,
+      group = 1
+    )
+  )
+```
+
+## Position Arguments
+
+### Total Diamonds by Cut
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(mapping = aes(x = cut, color = cut))
+```
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+
+
+### Total Diamonds By Cut, By Clarity
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+```
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = clarity),
+    position = "stack"
+  )
+```
+
+
+With `position = identity`:
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = clarity),
+    position = "identity")
+```
+
+With `position = identity` and alpha:
+
+```{r}
+ggplot(data = ggplot2::diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "identity", alpha = 1/5)
+```
+
+With `position = identity` and `fill = NA`:
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, color = clarity),
+    position = "identity",
+    fill = NA
+  )
+```
+
+With `position = fill`:
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = clarity),
+    position = "fill"
+  )
+```
+
+With `position = dodge`:
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = clarity),
+    position = "dodge"
+  )
+```
+
+### Highway Mileage (per Gallon) by Engine Displacement (in Litres)
+
+With overplotting:
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(
+    mapping = aes(x = displ, y = hwy)
+  )
+```
+
+
+With `position = jitter`
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(
+    mapping = aes(x = displ, y = hwy),
+    position = "jitter"
+  )
+```
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_jitter(
+    mapping = aes(x = displ, y = hwy)
+  )
+```
+
+### Exercises
+
+#### 1
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_point(
+    mapping = aes(x = cty, y = hwy),
+    position = "jitter"
+  )
+```
+
+#### 2
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_jitter(
+    mapping = aes(x = cty, y = hwy),
+    width = 0.3, 
+    height = 0.3
+  )
+```
+
+#### 3
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_count(
+    mapping = aes(x = cty, y = hwy)
+  )
+```
+
+#### 4
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_boxplot(mapping = aes(x = class, y = hwy, color = drv), position = "identity")
+```
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_boxplot(mapping = aes(x = class, y = hwy, color = drv), position = "dodge")
+```
+
+
+## Coordinate Systems
+
+### coord_flip
+
+```{r}
+ggplot(data = ggplot2::mpg) +
+  geom_boxplot(mapping = aes(x = class, y = hwy)) +
+  coord_flip()
+```
+
+### coord_polar
+
+```{r}
+bar <- ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = cut),
+    show.legend = FALSE,
+    width = 1
+  ) +
+  theme(aspect.ratio = 1) +
+  labs(x = NULL, y = NULL)
+```
+
+```{r}
+bar + coord_flip()
+```
+
+```{r}
+bar + coord_polar()
+```
+
+### Exercises
+
+#### 1
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = clarity),
+    position = "stack"
+  )
+```
+
+```{r}
+ggplot(data = ggplot2::diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, fill = clarity),
+    position = "stack"
+  ) + coord_polar()
+```
+
+#### 4
+
+```{r}
+ggplot(data = ggplot2::mpg, mapping = aes(x = cty, y = hwy)) +
+  geom_point() +
+  coord_fixed() + 
+  geom_abline()
+```
+
